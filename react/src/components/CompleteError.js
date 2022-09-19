@@ -1,8 +1,18 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './complete.css';
+import * as Sentry from "@sentry/browser";
+
 
 class CompleteError extends Component {
+  componentDidMount(){
+    try {
+      this.aFunctionThatMightFail();
+    } catch (err) {
+      Sentry.captureException(err);
+    }
+  }
+
   render() {
     // let errorInfo = this.props.history.location.state
     // console.log("> errorInfo", errorInfo)

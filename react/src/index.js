@@ -46,16 +46,18 @@ if (window.location.hostname === "localhost") {
 
 let BACKEND_URL
 const DSN = process.env.REACT_APP_DSN
-const RELEASE = release("application.monitoring.javascript") || process.env.REACT_APP_RELEASE
+const RELEASE = process.env.REACT_APP_RELEASE
 
 console.log("ENVIRONMENT", ENVIRONMENT)
-console.log("RELEASE", RELEASE)
+console.log("RELEASE here", RELEASE)
+console.log(process.env)
 
 Sentry.init({
   dsn: DSN,
   release: RELEASE,
   environment: ENVIRONMENT,
   tracesSampleRate: 1.0,
+  sampleRate: 0.25,
   integrations: [
     new Integrations.BrowserTracing({
       tracingOrigins: tracingOrigins,
@@ -84,6 +86,8 @@ Sentry.init({
     } else if (se) {
       event.fingerprint = ['{{ default }}', se ];
     }
+
+    console.log(event);
 
     return event;
   }
@@ -138,6 +142,7 @@ class App extends Component {
     })
 
     // Crasher will parse the query params
+    throw new Error('Unhandled');
     crasher()
   }
 
