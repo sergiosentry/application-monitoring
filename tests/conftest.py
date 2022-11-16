@@ -231,25 +231,22 @@ def ios_sim_driver(request, data_center):
         'accessKey': access_key_cap,
         'appium:deviceName': 'iPhone 11 Simulator',
         'platformName': 'iOS',
-        'appium:platformVersion': '16.1',
-        'udid':'157FB6DB-B28A-4BC1-8181-1524B31CE022',
-        "appium:usePrebuiltWDA": "false",
+        'appium:platformVersion': '14.5',
 
         'sauce:options': {
             'appiumVersion': '1.21.0',
-            'build': 'RDC-iOS-Mobile-Native',
+            'build': 'RDC-iOS-Mobile-Native-Test',
             'name': request.node.name,
         },
-
-        'appium:app': f'/Users/sergiolombana/Documents/saucelabs/EmpowerPlant.app',
-    }
+        'appium:app': f'https://github.com/sergiosentry/demo-test/raw/main/EmpowerPlant.zip',
+        }
 
     if data_center and data_center.lower() == 'eu':
         sauce_url = SAUCELABS_PROTOCOL + "{}:{}@ondemand.eu-central-1.saucelabs.com/wd/hub".format(username_cap, access_key_cap)
     else:
-        sauce_url = SAUCELABS_PROTOCOL + "{}:{}@ondemand.us-west-1.saucelabs.com/wd/hub".format(username_cap, access_key_cap)
+        sauce_url = SAUCELABS_PROTOCOL + "{}:{}@ondemand.us-west-1.saucelabs.com:443/wd/hub".format(username_cap, access_key_cap)
 
-    driver = appiumdriver.Remote('http://0.0.0.0:4723/wd/hub', desired_capabilities=caps)
+    driver = appiumdriver.Remote(sauce_url, desired_capabilities=caps)
     driver.implicitly_wait(20)
     yield driver
 
