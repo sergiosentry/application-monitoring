@@ -165,6 +165,8 @@ def sentry_event_context():
     if email not in [None, "undefined"]:
         sentry_sdk.set_user({ "email" : email })
 
+    sentry_sdk.set_tag("microservice", "flask-backend")
+
 if __name__ == '__main__':
     i = sys.version_info
     if sys.version_info[0] < 3:
