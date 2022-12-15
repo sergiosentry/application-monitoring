@@ -50,7 +50,7 @@ console.log("RELEASE", RELEASE)
 
 Sentry.init({
   dsn: DSN,
-  release: RELEASE,
+  release: "sergio-react@"+RELEASE,
   environment: ENVIRONMENT,
   tracesSampleRate: 1.0,
   debug: true,
